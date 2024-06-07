@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>.: Crud - Javascript :.</title>
+    <!-- primero van los archivos externos, y luego van los locales -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="./styles/app.css" />
+    <script type="module" src="./src/main.js"></script>
+  </head>
+  <body class="bg-slate-700 relative">
+    <section class="container mx-auto p-12 relative">
+      <div class="text-center">
+        <div
+          class="inline-flex items-center justify-center gap-4 px-2.5 py-2 rounded-lg bg-[#fedd49]"
+        >
+          <img src="./icons/logo.svg" alt="Logo" />
+          <h1 class="text-4xl font-bold">Star Wars</h1>
+        </div>
+      </div>
+      <section class="flex justify-between items-center gap-3 py-6">
+        <button
+          id="open-modal"
+          role="button"
+          aria-label="open modal"
+          class="flex items-center justify-center w-1/2 px-5 py-2 tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600"
+        >
+          <img src="./icons/plus.svg" alt="Add user" class="w-5 h-5 invert" />
+          <span>Add jedi</span>
+        </button>
+        <form id="search" class="relative flex items-center">
+          <span class="absolute">
+            <img src="./icons/search.svg" alt="Search" class="w-5 h-5 mx-3" />
+          </span>
+
+          <input
+            type="search"
+            placeholder="Search"
+            name="searchValue"
+            class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+          />
+        </form>
+      </section>
+      <!-- Tabla -->
+      <div
+        class="overflow-y-hidden rounded-lg border border-gray-200 shadow-md"
+      >
+        <table
+          class="w-[1024px] lg:w-full border-collapse bg-white text-left text-sm text-gray-500"
+        >
+          <thead class="bg-gray-50">
+            <tr id="titlesTable"></tr>
+          </thead>
+          <tbody
+            id="usersTable"
+            class="divide-y divide-gray-100 border-t border-gray-100"
+          ></tbody>
+        </table>
+      </div>
+      <!-- Tabla -->
+    </section>
+    <!-- Modal -->
+    <section
+      id="modal"
+      class="hidden fixed z-50 inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    >
+      <div
+        class="relative top-20 mx-auto p-5 border w-4/5 md:w-1/2 lg:w-[520px] shadow-lg rounded-lg bg-white"
+      >
+        <button
+          id="close-modal"
+          role="button"
+          aria-label="close modal"
+          class="cursor-pointer absolute top-0 right-0 mt-4 mr-5"
+        >
+          <img src="./icons/close.svg" alt="Close" class="w-5 h-5" />
+        </button>
+        <div>
+          <h3 id="state" class="text-lg text-center leading-6 font-medium text-gray-900"></h3>
+          <div class="px-7 py-5" id="modal-container">
+            <form class="grid gap-4" id="create-user">
+              <div>
+                <label
+                  for="name"
+                  class="text-gray-800 text-sm font-bold leading-tight tracking-normal capitalize"
+                  >Name</label
+                >
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  class="text-gray-600 font-normal w-full h-10 pl-3 text-sm rounded-lg border border-gray-300 focus:outline-none focus:border focus:border-blue-500"
+                  placeholder="James"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="age"
+                  class="text-gray-800 text-sm font-bold leading-tight tracking-normal capitalize"
+                  >Age</label
+                >
+                <input
+                  id="age"
+                  type="number"
+                  name="age"
+                  class="text-gray-600 font-normal w-full h-10 pl-3 text-sm rounded-lg border border-gray-300 focus:outline-none focus:border focus:border-blue-500"
+                  placeholder="30"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="role"
+                  class="text-gray-800 text-sm font-bold leading-tight tracking-normal capitalize"
+                  >Role</label
+                >
+                <select
+                  class="text-gray-600 block rounded-lg border border-gray-300 focus:outline-none focus:border focus:border-blue-500 w-full h-10 px-3"
+                  name="role"
+                  id="role"
+                  required
+                >
+                  <option selected disabled value=""></option>
+                  <option value="Iniciado Jedi">Iniciado Jedi</option>
+                  <option value="Padawan">Padawan</option>
+                  <option value="Caballero Jedi">Caballero Jedi</option>
+                  <option value="Maestro Jedi">Maestro Jedi</option>
+                  <option value="Maestro de la Orden">Maestro de la Orden</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  for="team"
+                  class="text-gray-800 text-sm font-bold leading-tight tracking-normal capitalize"
+                  >Team</label
+                >
+                <select
+                  class="text-gray-600 block rounded-lg border border-gray-300 focus:outline-none focus:border focus:border-blue-500 w-full h-10 px-3"
+                  name="team"
+                  id="team"
+                  required
+                >
+                  <option selected disabled value=""></option>
+                  <option value="First Order">First Order</option>
+                  <option value="Jedi Order">Jedi Order</option>
+                  <option value="Rebel Alliance">Rebel Alliance</option>
+                  <option value="Resistance">Resistance</option>
+                </select>
+              </div>
+              <button
+                class="mt-3 w-full px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600"
+              >
+                Save
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
